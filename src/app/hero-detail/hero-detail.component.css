@@ -1,0 +1,106 @@
+html{
+  overflow: hidden;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  background: black;
+  overflow: hidden
+}
+
+.bar{
+  margin: 20px;
+  /* height: 5%; */
+  color: white;
+  /* opacity: 0.8; */
+  padding: 20px;
+  font-size: 70px;
+  /* #C1D101 */
+}
+
+.bar.border{
+  border: 1px solid #F0FFFF;
+}
+
+.bar.id{
+  padding-left: 125px;
+  left: 500px;
+  width: 150px;
+}
+
+.bar.name{
+  width: 650px;
+  /* margin-left: 2000px; */
+  /* width: 10%; */
+
+}
+
+.bar.message{
+  width: 1500px;
+  /* margin-left: 2000px; */
+  /* width: 10%; */
+
+}
+
+.NotificationTray {
+  transition: 0.5s;
+  cursor: pointer;
+  margin: 20px;
+  padding: 40px;
+  font-size: 70px;
+}
+
+.NotificationTray.fixed {
+  border: 1px solid rgba(36, 241, 6, 0.46);
+  background-color: rgba(7, 149, 66, 0.12156862745098039);
+  box-shadow: 0px 0px 2px #259c08;
+  color: #0ad406;
+}
+
+.NotificationTray.critic {
+  border: 1px solid rgba(241, 6, 6, 0.81);
+    background-color: rgba(220, 17, 1, 0.16);
+    box-shadow: 0px 0px 2px #ff0303;
+    color: #ff0303;
+}
+
+.NotificationTray.warning {
+  border: 1px solid rgba(241, 142, 6, 0.81);
+  background-color: rgba(220, 128, 1, 0.16);
+  box-shadow: 0px 0px 2px #ffb103;
+  color: #ffb103;
+}
+
+.NotificationTray.id {
+  width: 100px;
+}
+
+.NotificationTray.machine {
+  width: 600px;
+}
+
+.NotificationTray.message {
+  width: 1500px;
+}
+
+.NotificationTray.fixed:hover{
+  background-color: rgba(7, 149, 66, 0.35);
+  transition: 0.5s;
+}
+
+.NotificationTray.critic:hover{
+  background-color: rgba(220, 17, 1, 0.33);
+  transition: 0.5s;
+}
+
+.NotificationTray.warning:hover{
+  background-color: rgba(220, 128, 1, 0.33);
+  transition: 0.5s;
+}
+
+

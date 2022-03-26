@@ -7,9 +7,10 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
 import { HeroOverviewComponent } from './hero-overview/hero-overview.component';
 
 const routes: Routes = [
-  { path: '', component: AppComponent },
-  { path: 'heroes-detail', component: HeroDetailComponent },
-  { path: 'heroes-component', component: HeroOverviewComponent }
+  // { path: '', component: AppComponent },
+  // { path: '', component: HeroDetailComponent },
+  // { path: 'heroes-detail', component: HeroDetailComponent },
+  // { path: 'heroes-overview', component: HeroOverviewComponent }
 ];
 
 @NgModule({
