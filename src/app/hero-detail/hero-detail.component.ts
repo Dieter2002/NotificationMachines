@@ -10,6 +10,9 @@ import {
 } from '@angular/animations';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { timer } from 'rxjs';
+import { Router } from '@angular/router';
+import { BekidanFillerItem } from '../models/BekidanFillerItem';
 // import { Config, ConfigService } from '../Service/service';
 
 export const fadeAnimation = trigger('popOverState', [
@@ -91,27 +94,17 @@ export class HeroDetailComponent implements OnInit {
   title = "WELKOM";
 
   show = false;
+  seconds = 3;
 
-  public notifications: [Notification];
-  // public configService;
-  // config: Config | undefined;
-  // public http: HttpClient;
-  totalAngularPackages: any;
+  public notifications!: [NotificationMachine];
 
-  constructor(private http: HttpClient) {
-    let no = new Notification("", "Bekidan trayaanvuller voor", "De trays zijn weer bijgevuld", "critic");
-    let no1 = new Notification("check-circle", "Bekidan trayaanvuller achter", "De trays zijn zijn weer bijgevuld", "fixed");
-    let no5 = new Notification("check-circle", "Bekidan trayaanvuller voor", "De trays zijn zijn weer bijgevuld", "fixed");
-    let no2 = new Notification("exclamation-triangle", "Grondvulmachine", "De grond is op", "critic");
-    let no3 = new Notification("exclamation-triangle", "Aanvoerband", "Ontstopping bij Bekidan tray aanvuller voor", "critic");
-    // let no4 = new Notification("exclamation-triangle", "Bufferband", "Band staat vol", "warning");
-    no.visible = false;
-    this.notifications = [no];
-    this.notifications.push(no1, no2, no3);
-    // this.http: HttpClient;
+  constructor(private router: Router) {
+    let no: NotificationMachine = new NotificationMachine("critic", "f", "fds", "critic")
+    this.notifications = [(no)]
+    no.visible = false
 
-    // this.configService = new ConfigService(http);
-
+    var timerr = timer(2000,5000);
+    timerr.subscribe(any => this.DataCall());
   }
 
   get stateName() {
@@ -120,87 +113,90 @@ export class HeroDetailComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.AddNotificationsToStack();
   }
 
   toggle() {
     this.show = !this.show;
   }
 
-  AddNotificationsToStack() {
-    console.log("HELLO");
-  }
-
-  NotiToFixed() {
-    console.log("HELLO");
-  }
-
-  CheeseBurger() {
-    console.log("HELLO");
-    this.AddToStack(new Notification("exclamation-triangle", "Barkmachine", "De bark is op", "critic"));
-
-
-  }
-  CheeseBurger2() {
-    console.log("HELLO");
-    // this.AddToStack(new Notification("HAHAA"));
-
-
-  }
   CheeseBurger3() {
-    const app = document.getElementById("app");
-
-    app!.style!.color = "red";
+    document.getElementById("app")!.style!.color = "red";
   }
 
-  _displayItems(data: Machines[]) {
+  _displayItems(data: [BekidanFillerItem]) {
+    // if (data.length < 1){
+    //   this.notifications.splice(0);
+    // }
+
+    console.log(data)
 
     data.forEach((item: any) => {
-      // console.log(item.ID);
-      // console.log(item.MachineNaam);
-      // console.log(item.SensorValue);
+      // let newTodo: BekidanFillerItem = Object.assign(new BekidanFillerItem(), item)
+      let newTodo: BekidanFillerItem = item
 
-      let kaas = item;
+      if(!this.notifications.some(x => x.machine === newTodo.machineName)){
+        var not = new NotificationMachine("exclamation-triangle", newTodo.machineName, "De grond is op", "critic");
+        if (!newTodo.sensorValue){
+          console.log(newTodo.sensorValue + "4");
+          this.notifications.push(not);
+        }
+        else{
+          this.notifications.forEach((item, index) => {
+            if (item.machine === newTodo.machineName) this.notifications.splice(index, 1);
+          });
+        }
 
-      console.log(kaas);
-
+      }
+      else{
+        this.notifications.forEach((item, index) => {
+          if (item.machine === newTodo.machineName) {
+            this.notifications.forEach((item, index) => {
+              if (item.type === "fixed") this.notifications.splice(index, 1);
+            });
+            if (newTodo.sensorValue)
+              this.SetNotificationDone(item);
+          }
+        });
+      }
     });
+  }
 
+  test(){
+
+  }
+
+  OpenSetting(){
+    this.router.navigateByUrl('/settings');
   }
 
   async DataCall() {
-    await fetch('https://localhost:7283/api/BekidanFillerItems')
+    await fetch('https://192.168.178.61:13367/api/BekidanFillerItems')
       .then(response => response.json())
       .then(data => this._displayItems(data))
       .catch(error => console.error('Unable to get items.', error));
   }
 
-  Kaas(noti: Notification) {
+  HandleConnectionError(){
+
+  }
+
+  RemoveFromList(noti: NotificationMachine) {
     this.notifications.forEach((item, index) => {
       if (item === noti) this.notifications.splice(index, 1);
     });
-
-    // this.notifications.forEach((item, index) => {
-    //   if (item === noti) item.type = "fixed";
-    // });
   }
 
-  SetNotificationDone(noti: Notification) {
-    let no = noti;
-    no.type = "white";
+  SetNotificationDone(noti: NotificationMachine) {
+    noti.type = "fixed";
   }
 
-  AddToStack(noti: Notification) {
+  AddToStack(noti: NotificationMachine) {
     this.notifications.push(noti);
   }
 }
 
-export interface Machines{
-  MachineNaam: string;
-  SensorValue: string;
-}
-
-export class Notification {
+/** This NotificationMachine API interface is used to configure and display desktop notifications to the user. */
+export class NotificationMachine {
   id: number;
   icon: string;
   machine: string;
@@ -217,4 +213,6 @@ export class Notification {
     this.visible = true;
   }
 }
+
+
 

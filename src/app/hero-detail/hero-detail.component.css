@@ -15,12 +15,9 @@ body {
 
 .bar{
   margin: 20px;
-  /* height: 5%; */
   color: white;
-  /* opacity: 0.8; */
   padding: 20px;
-  font-size: 70px;
-  /* #C1D101 */
+  font-size: 30px;
 }
 
 .bar.border{
@@ -35,16 +32,14 @@ body {
 
 .bar.name{
   width: 650px;
-  /* margin-left: 2000px; */
-  /* width: 10%; */
-
 }
 
 .bar.message{
   width: 1500px;
-  /* margin-left: 2000px; */
-  /* width: 10%; */
+}
 
+.bar.settings:hover{
+  background-color:rgba(241, 142, 6, 0.81);
 }
 
 .NotificationTray {
@@ -52,7 +47,7 @@ body {
   cursor: pointer;
   margin: 20px;
   padding: 40px;
-  font-size: 70px;
+  font-size: 30px;
 }
 
 .NotificationTray.fixed {

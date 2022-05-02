@@ -1,0 +1,179 @@
+html{
+  background-color: #F1F1F1;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  /* background: black; */
+  /* overflow: hidden */
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding-top: 20px;
+  overflow: hidden;
+}
+
+li {
+  float: right;
+  margin-left: 20px;
+}
+
+li a {
+  display: block;
+  border-radius: 10px;
+  background-color: #C1D101;
+  color: #00365F;
+  text-align: center;
+  padding: 16px;
+  padding-left: 30px;
+  padding-right: 30px;
+  text-decoration: none;
+}
+
+li a:hover {
+  display: block;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+}
+
+.topbar{
+  background-color: white;
+  height: 10%;
+  padding-bottom: 15px;
+}
+
+.topbar-right{
+  background-color: white;
+  height: 10%;
+  margin-right: 100px;
+}
+
+.middlebar{
+  background-color: #F1F1F1;
+  height: 80%;
+  margin-bottom: 150px;
+  overflow: auto;
+}
+
+.bottombar{
+  background-color: white;
+  height: 10%;
+}
+
+.color-style{
+  font-family: "Squad Semi Bold", Helvetica, sans-serif;
+
+  padding-top: 50px;
+  color: #7A8401;
+  padding-bottom: 50px;
+}
+
+.middle-center{
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-bottom: 150px;
+  background-color: #F1F1F1;
+}
+
+.letter-style{
+  font-family: "Squad Semi Bold", Helvetica, sans-serif;
+}
+
+/* Device */
+.reported-device{
+  height: 100px;
+  background-color: white;
+  margin: 20px;
+  border-radius: 10px;
+}
+
+.reported-device:hover{
+  background-color: #C1D101;
+}
+
+.reported-device-description{
+  float: left;
+  padding-left: 30px;
+  padding-top: 10px;
+  color: #7A8401;
+  width: 48%;
+  /* padding-left: 100px; */
+}
+
+.reported-device-icon{
+  float: right;
+  padding-right: 30px;
+  padding-top: 40px;
+  font-size: 30px;
+  /* width: 48%; */
+}
+
+.description{
+  /* padding: 20px; */
+  color: #7A8401;
+  /* padding-left: 100px; */
+}
+
+.label-description{
+  padding: 20px;
+  color: black;
+  font-size: 20px;
+  /* padding-left: 100px; */
+}
+
+.input-description{
+  padding: 20px;
+  color: #7A8401;
+  font-size: 30px;
+  /* outline: none; */
+  border: none;
+  display: inline-block;
+}
+
+.input-description:focus{
+  border: 100px;
+  /* outline: none; */
+}
+
+/* Plus iccon */
+.icon-right{
+  margin: 20px;
+  float: right;
+  font-size: 40px;
+}
+
+.icon-right:hover{
+  background-color: #C1D101;
+  border-radius: 20px;
+}
+
+.DetailWindow{
+  padding: 3%;
+  width: 80%;
+  height: 40%;
+  position: absolute;
+  margin-top: 100px;
+  z-index: 10;
+  background-color: white;
+  vertical-align: middle;
+  /* border-style: solid;
+  border-color: #00365F;
+  border-radius: 10px; */
+}
+
+.DetailWindowBottum{
+  position: absolute;
+  bottom: 20px;
+  right: 0px;
+  padding-right: 20px;
+}
+
