@@ -11,35 +11,41 @@
     ></script> -->
   </head>
   <body>
-    <div class="bar">
-      <td class="bar id">ID</td>
-      <td class="bar name">Naam</td>
-      <td class="bar message">Bericht</td>
-      <td (click)="OpenSetting()" class="bar settings bi bi-sliders"></td>
-
-    </div>
-
-    <!-- <button (click)="CheeseBurger()">HAHAH</button>
-    <button (click)="CheeseBurger2()">HAHAH</button>
-    <button (click)="DataCall()">HAHAH</button> -->
-
-    <section>
-
-      <div [@simpleFadeAnimation]="'out'" *ngFor="let item of notifications">
-        <div
-          *ngIf="item.visible"
-          [ngStyle]="{ color: item.type }"
-          class="NotificationTray {{ item.type }}"
-        >
-          <!-- <td><i class="bi bi-check-circle"></i></td> -->
-          <!-- <td class="bi bi-exclamation-triangle"></td> -->
-          <td class="bi bi-{{item.icon}}"></td>
-          <td class="NotificationTray id">#{{ item.id }}</td>
-          <td class="NotificationTray machine">{{ item.machine }}</td>
-          <td class="NotificationTray message">{{ item.message }}</td>
-        </div>
+    <app-bar></app-bar>
+    <!-- <div class="topbar">
+      <div class="topbar-right">
+        <ul>
+          <li><a class="letter-style li-a-size" >home</a></li>
+          <li><a class="letter-style li-a-size" >vertalingen</a></li>
+        </ul>
       </div>
-    </section>
+    </div> -->
+
+    <div class="middlebar color-style">
+      <div class="bar">
+        <td class="bar id">ID</td>
+        <td class="bar name">Naam</td>
+        <td class="bar message">Bericht</td>
+        <td (click)="OpenSetting()" class="bar settings bi bi-sliders"></td>
+      </div>
+
+      <section>
+        <div [@simpleFadeAnimation]="'out'" *ngFor="let item of notifications">
+          <div
+            *ngIf="item.visible"
+            [ngStyle]="{ color: item.type }"
+            class="NotificationTray {{ item.type }}"
+          >
+            <!-- <td><i class="bi bi-check-circle"></i></td> -->
+            <!-- <td class="bi bi-exclamation-triangle"></td> -->
+            <td class="bi bi-{{item.icon}}"></td>
+            <td class="NotificationTray id">#{{ item.id }}</td>
+            <td class="NotificationTray machine">{{ item.machine }}</td>
+            <td class="NotificationTray message">{{ item.message }}</td>
+          </div>
+        </div>
+      </section>
+  </div>
 
     <!-- <div>{{ title }}</div>
     <tr *ngFor="let hero of HEROES">

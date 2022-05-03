@@ -9,15 +9,34 @@ body {
   height: 100%;
   width: 100%;
   margin: 0px;
-  background: black;
+  /* background: black; */
   overflow: hidden
 }
 
+.topbar{
+  background-color: white;
+  height: 10%;
+  padding-bottom: 15px;
+}
+
+.middlebar{
+  background-color: #F1F1F1;
+  height: 80%;
+  margin-bottom: 150px;
+  overflow: auto;
+}
+
+.color-style{
+  font-family: "Squad Semi Bold", Helvetica, sans-serif;
+  color: #7A8401;
+  padding-bottom: 50px;
+}
+
 .bar{
-  margin: 20px;
-  color: white;
+  /* margin: 20px; */
   padding: 20px;
-  font-size: 30px;
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .bar.border{
@@ -25,13 +44,15 @@ body {
 }
 
 .bar.id{
-  padding-left: 125px;
-  left: 500px;
-  width: 150px;
+  padding-left: 100px;
+  /* left: 500px; */
+  /* margin-left: 200px; */
+  width: 100px;
 }
 
 .bar.name{
-  width: 650px;
+  width: 31.5%;
+
 }
 
 .bar.message{
@@ -39,7 +60,7 @@ body {
 }
 
 .bar.settings:hover{
-  background-color:rgba(241, 142, 6, 0.81);
+  background-color: white;
 }
 
 .NotificationTray {
@@ -51,17 +72,26 @@ body {
 }
 
 .NotificationTray.fixed {
-  border: 1px solid rgba(36, 241, 6, 0.46);
+  /* border: 1px solid rgba(36, 241, 6, 0.46);
   background-color: rgba(7, 149, 66, 0.12156862745098039);
   box-shadow: 0px 0px 2px #259c08;
-  color: #0ad406;
+  color: #0ad406; */
+  /* color: #7A8401; */
+  border: 1px solid rgba(122, 132, 1, 0.46);
+  background-color: rgba(122, 132, 1, 0.12156862745098039);
+  box-shadow: 0px 0px 2px #7a8401;
+  color: #7a8401;
 }
 
 .NotificationTray.critic {
-  border: 1px solid rgba(241, 6, 6, 0.81);
-    background-color: rgba(220, 17, 1, 0.16);
-    box-shadow: 0px 0px 2px #ff0303;
-    color: #ff0303;
+  /* border: 1px solid rgba(241, 6, 6, 0.81);
+  background-color: rgba(220, 17, 1, 0.16);
+  box-shadow: 0px 0px 2px #ff0303;
+  color: #ff0303; */
+  border: 1px solid rgba(0, 54, 95, 0.81);;
+  background-color: rgba(0, 54, 95, 0.16);;
+  box-shadow: 0px 0px 2px #00365F;
+  color: #00365F;
 }
 
 .NotificationTray.warning {
@@ -76,7 +106,9 @@ body {
 }
 
 .NotificationTray.machine {
-  width: 600px;
+  width: 30%;
+  max-width: 30%;
+  padding: 0%;
 }
 
 .NotificationTray.message {
@@ -89,7 +121,7 @@ body {
 }
 
 .NotificationTray.critic:hover{
-  background-color: rgba(220, 17, 1, 0.33);
+  /* background-color: rgba(220, 17, 1, 0.33); */
   transition: 0.5s;
 }
 

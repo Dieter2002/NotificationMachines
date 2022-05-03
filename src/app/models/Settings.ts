@@ -1,7 +1,7 @@
-export class SettingsBase{
-  machineName: string = "";
-}
+import { ValuesDescription } from "./BekidanFillerItem";
 
-export class Settings extends SettingsBase{
+export class Settings{
   id: string = ""
+  machineName: string = "";
+  description!: [ValuesDescription]
 }

@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationMachine } from '../hero-detail/hero-detail.component';
-import { Settings, SettingsBase } from '../models/Settings';
+import { ValuesDescription } from '../models/BekidanFillerItem';
+import { Settings } from '../models/Settings';
 
 @Component({
   selector: 'app-settings',
@@ -41,13 +42,13 @@ export class SettingsComponent implements OnInit {
     const input = document.getElementById('machinename') as HTMLInputElement;
 
     if(this.CheckDeviceExist(input?.value)){
+      this.showDetailWindow = false
       return
     }
 
     this.ActualMachine.machineName = input?.value
 
     // Update existing item
-    console.log(this.ActualMachine)
     if(this.ActualMachine.id != ""){
       await this.DataUpdate(this.ActualMachine)
       this.showDetailWindow = false
@@ -95,15 +96,17 @@ export class SettingsComponent implements OnInit {
   }
 
   async DataAdd(item: Settings){
-    const options = {headers: {      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    const options = {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     , 'Content-Type': 'application/json'}};
 
+    item.description = [new ValuesDescription()];
+
     this.http.post<Settings>(this.urlForApi, JSON.stringify(item), options).subscribe(
-    (t: Settings) => this.ConnectedDevices.push(t));
+    (t: Settings) => {this.ConnectedDevices.push(item)});
   }
 
   async DataUpdate(item: Settings){
-    const options = {headers: {      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    const options = {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     , 'Content-Type': 'application/json'}};
 
     this.http.put<Settings>(this.urlForApi+item.id, JSON.stringify(item), options).subscribe(

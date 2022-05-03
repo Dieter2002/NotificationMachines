@@ -103,7 +103,7 @@ export class HeroDetailComponent implements OnInit {
     this.notifications = [(no)]
     no.visible = false
 
-    var timerr = timer(2000,5000);
+    var timerr = timer(0,5000);
     timerr.subscribe(any => this.DataCall());
   }
 
@@ -124,20 +124,21 @@ export class HeroDetailComponent implements OnInit {
   }
 
   _displayItems(data: [BekidanFillerItem]) {
-    // if (data.length < 1){
-    //   this.notifications.splice(0);
-    // }
-
-    console.log(data)
+    if (data.length < 1){
+      this.notifications.splice(0);
+    }
 
     data.forEach((item: any) => {
-      // let newTodo: BekidanFillerItem = Object.assign(new BekidanFillerItem(), item)
-      let newTodo: BekidanFillerItem = item
+      let newTodo: BekidanFillerItem = Object.assign(new BekidanFillerItem(), item)
+      // let newTodo: BekidanFillerItem = item
+      // let newTodo: JSON.parse(item)
+
+      // let jsonObject = item.json() as Object;
+      // let fooInstance = plainToClass(Models.Foo, jsonObject);
 
       if(!this.notifications.some(x => x.machine === newTodo.machineName)){
         var not = new NotificationMachine("exclamation-triangle", newTodo.machineName, "De grond is op", "critic");
-        if (!newTodo.sensorValue){
-          console.log(newTodo.sensorValue + "4");
+        if (!newTodo.description[0].sensorValue){
           this.notifications.push(not);
         }
         else{
@@ -153,7 +154,7 @@ export class HeroDetailComponent implements OnInit {
             this.notifications.forEach((item, index) => {
               if (item.type === "fixed") this.notifications.splice(index, 1);
             });
-            if (newTodo.sensorValue)
+            if (newTodo.description[0].sensorValue)
               this.SetNotificationDone(item);
           }
         });

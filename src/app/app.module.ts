@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './settings/settings.component';
+import { BarComponent } from './bar/bar.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { SettingsComponent } from './settings/settings.component';
     HeroDetailComponent,
     HeroOverviewComponent,
     HomeComponent,
-    SettingsComponent
+    SettingsComponent,
+    BarComponent
   ],
   imports: [
     BrowserModule,
