@@ -17,6 +17,14 @@ export class BarComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
+  NavToSettings(){
+    this.router.navigateByUrl('settings');
+  }
+
+  NavToImages(){
+    this.router.navigateByUrl('images');
+  }
+
 
 
 }

@@ -1,0 +1,21 @@
+html{
+  overflow: hidden;
+}
+
+body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  margin: 0px;
+  /* background: black; */
+  overflow: hidden
+}
+
+.middlebar{
+  background-color: #F1F1F1;
+  height: 80%;
+  margin-bottom: 150px;
+  overflow: auto;
+}

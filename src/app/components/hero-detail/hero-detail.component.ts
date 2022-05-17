@@ -4,15 +4,14 @@ import {
   style,
   animate,
   transition,
-  query,
-  stagger,
-  // ...
 } from '@angular/animations';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
-import { BekidanFillerItem } from '../models/BekidanFillerItem';
+import { BekidanFillerItem } from '../../models/BekidanFillerItem';
+import { NotificationMachine } from '../../models/NotificationMachine';
+import { GlobalSettingsService } from 'src/app/services/services';
 // import { Config, ConfigService } from '../Service/service';
 
 export const fadeAnimation = trigger('popOverState', [
@@ -96,23 +95,37 @@ export class HeroDetailComponent implements OnInit {
   show = false;
   seconds = 3;
 
-  public notifications!: [NotificationMachine];
+  public showBar = false;
 
-  constructor(private router: Router) {
-    let no: NotificationMachine = new NotificationMachine("critic", "f", "fds", "critic")
+  public notifications!: Array<NotificationMachine>;
+
+  // private urlForApi = "https://localhost:13367/api/BekidanFillerItems/"
+  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/BekidanFillerItems/"
+  public soundPlaying = false
+
+  constructor(private router: Router,
+    private http: HttpClient,
+    private globalSettingsService:GlobalSettingsService) {
+    let no: NotificationMachine = new NotificationMachine("exclamation-triangle", "", "", "", false, "", "",  "critic")
     this.notifications = [(no)]
     no.visible = false
 
     var timerr = timer(0,5000);
-    timerr.subscribe(any => this.DataCall());
+    timerr.subscribe(() => this.DataCall());
   }
 
   get stateName() {
-    // console.log(this.show);
     return this.show ? 'show' : 'hide'
   }
 
   ngOnInit() {
+    if(this.globalSettingsService.YourComponentNameLoadedAlready){
+      this.globalSettingsService.YourComponentNameLoadedAlready=true;
+    }
+  }
+
+  HideShowBar(){
+    this.showBar = !this.showBar;
   }
 
   toggle() {
@@ -123,47 +136,82 @@ export class HeroDetailComponent implements OnInit {
     document.getElementById("app")!.style!.color = "red";
   }
 
+  RemoveAllNotifications(){
+    this.notifications = []
+    this.DataRemove();
+  }
+
   _displayItems(data: [BekidanFillerItem]) {
+    var audio = new Audio('http://localhost/samsung-s10-spaceline-notification.mp3');
+    audio.play();
+
     if (data.length < 1){
       this.notifications.splice(0);
     }
 
-    data.forEach((item: any) => {
+    var itemAdded = false
+
+    data.forEach(async (item: any) => {
       let newTodo: BekidanFillerItem = Object.assign(new BekidanFillerItem(), item)
-      // let newTodo: BekidanFillerItem = item
-      // let newTodo: JSON.parse(item)
 
-      // let jsonObject = item.json() as Object;
-      // let fooInstance = plainToClass(Models.Foo, jsonObject);
+      if(!this.notifications.some(x => x.machineSensorId === newTodo.machineSensorId)){
 
-      if(!this.notifications.some(x => x.machine === newTodo.machineName)){
-        var not = new NotificationMachine("exclamation-triangle", newTodo.machineName, "De grond is op", "critic");
-        if (!newTodo.description[0].sensorValue){
+        var not = new NotificationMachine("exclamation-triangle", newTodo.machineName, newTodo.machineSensorId,
+        newTodo.sensorName, newTodo.sensorValue, newTodo.information, newTodo.symbolForUrl, "critic");
+
+        if (!newTodo.sensorValue){
           this.notifications.push(not);
+          itemAdded = true
         }
-        else{
-          this.notifications.forEach((item, index) => {
-            if (item.machine === newTodo.machineName) this.notifications.splice(index, 1);
-          });
-        }
-
       }
       else{
         this.notifications.forEach((item, index) => {
-          if (item.machine === newTodo.machineName) {
-            this.notifications.forEach((item, index) => {
-              if (item.type === "fixed") this.notifications.splice(index, 1);
-            });
-            if (newTodo.description[0].sensorValue)
+          if (item.machineSensorId === newTodo.machineSensorId) {
+            if (item.type === "fixed") this.notifications.splice(index, 1);
+            if (newTodo.sensorValue){
+              item.message = newTodo.information
+              item.fixed = newTodo.sensorValue
               this.SetNotificationDone(item);
+            }
           }
         });
       }
     });
+    // After all done, beep
+    if (itemAdded){
+      console.log(this.soundPlaying)
+      if (!this.soundPlaying){
+          this.PlayBeep()
+          console.log("Beep")
+          return
+      }
+    }
   }
 
-  test(){
+  PlayBeep(){
+    var audioCtx = new(window.AudioContext)();
 
+    var oscillator = audioCtx.createOscillator();
+    var gainNode = audioCtx.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    gainNode.gain.value = 1;
+    oscillator.frequency.value = 400;
+    oscillator.type = "sine";
+
+    oscillator.start();
+
+    setTimeout(
+      this.HandleSoundSetting,
+      1000,
+      oscillator
+    );
+  }
+
+  HandleSoundSetting(oscillator: OscillatorNode){
+    oscillator.stop()
   }
 
   OpenSetting(){
@@ -171,10 +219,17 @@ export class HeroDetailComponent implements OnInit {
   }
 
   async DataCall() {
-    await fetch('https://192.168.178.61:13367/api/BekidanFillerItems')
+    await fetch(this.urlForApi)
       .then(response => response.json())
       .then(data => this._displayItems(data))
       .catch(error => console.error('Unable to get items.', error));
+  }
+
+  async DataRemove(){
+    const options = {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+    , 'Content-Type': 'application/json'}};
+
+    this.http.delete(this.urlForApi,  options).subscribe();
   }
 
   HandleConnectionError(){
@@ -189,6 +244,7 @@ export class HeroDetailComponent implements OnInit {
 
   SetNotificationDone(noti: NotificationMachine) {
     noti.type = "fixed";
+    noti.icon = "check-circle";
   }
 
   AddToStack(noti: NotificationMachine) {
@@ -196,24 +252,7 @@ export class HeroDetailComponent implements OnInit {
   }
 }
 
-/** This NotificationMachine API interface is used to configure and display desktop notifications to the user. */
-export class NotificationMachine {
-  id: number;
-  icon: string;
-  machine: string;
-  message: string;
-  type?: string;
-  visible?: boolean;
 
-  constructor(icon: string, machine: string, message: string, type: string) {
-    this.id = 0;
-    this.icon = icon;
-    this.machine = machine;
-    this.message = message;
-    this.type = type;
-    this.visible = true;
-  }
-}
 
 
 

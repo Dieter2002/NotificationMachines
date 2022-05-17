@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NotificationMachine } from '../hero-detail/hero-detail.component';
+import { NotificationMachine } from '../../models/NotificationMachine';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +10,8 @@ export class HomeComponent implements OnInit {
   public devices!: [NotificationMachine];
 
   constructor() {
-
   }
 
   ngOnInit(): void {
   }
-
 }

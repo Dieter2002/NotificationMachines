@@ -4,13 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeroDetailComponent } from './hero-detail/hero-detail.component';
-import { HeroOverviewComponent } from './hero-overview/hero-overview.component';
-import { HomeComponent } from './home/home.component';
+import { HeroDetailComponent } from './components/hero-detail/hero-detail.component';
+import { HeroOverviewComponent } from './components/hero-overview/hero-overview.component';
+import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { SettingsComponent } from './settings/settings.component';
-import { BarComponent } from './bar/bar.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { BarComponent } from './components/bar/bar.component';
+import { ImagesComponent } from './components/images/images.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { BarComponent } from './bar/bar.component';
     HeroOverviewComponent,
     HomeComponent,
     SettingsComponent,
-    BarComponent
+    BarComponent,
+    ImagesComponent
   ],
   imports: [
     BrowserModule,

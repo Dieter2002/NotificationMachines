@@ -5,13 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+
     <!-- <script
       src="https://kit.fontawesome.com/5ff0cc3a63.js"
       crossorigin="anonymous"
     ></script> -->
   </head>
   <body>
-    <app-bar></app-bar>
+    <div *ngIf="showBar">
+      <app-bar></app-bar>
+    </div>
     <!-- <div class="topbar">
       <div class="topbar-right">
         <ul>
@@ -22,10 +25,13 @@
     </div> -->
 
     <div class="middlebar color-style">
+      <i *ngIf="!showBar" (click)="HideShowBar()" class="bi bi-chevron-compact-down icon-down"></i>
+      <i *ngIf="showBar" (click)="HideShowBar()" class="bi bi-chevron-up icon-down"></i>
+
       <div class="bar">
-        <td class="bar id">ID</td>
-        <td class="bar name">Naam</td>
-        <td class="bar message">Bericht</td>
+        <td class="bar id">Type</td>
+        <td class="bar name">Machine</td>
+        <td class="bar message">Melding</td>
         <td (click)="OpenSetting()" class="bar settings bi bi-sliders"></td>
       </div>
 
@@ -38,21 +44,20 @@
           >
             <!-- <td><i class="bi bi-check-circle"></i></td> -->
             <!-- <td class="bi bi-exclamation-triangle"></td> -->
-            <td class="bi bi-{{item.icon}}"></td>
-            <td class="NotificationTray id">#{{ item.id }}</td>
+            <td class="bi bi-{{item.icon}}" style="margin-bottom: 100px;"></td>
+
+            <!-- <td class="NotificationTray id">#{{ item.id }}</td> -->
+            <td class="NotificationTray id">
+              <img class="imgVector" [ngClass]="{'imgVectorDone' : item.fixed}" src="{{item.symbolForUrl}}">
+            </td>
             <td class="NotificationTray machine">{{ item.machine }}</td>
             <td class="NotificationTray message">{{ item.message }}</td>
           </div>
         </div>
       </section>
+      <div>
+        <button (click)="RemoveAllNotifications()" class="button">Verwijder alle meldingen</button>
+      </div>
   </div>
-
-    <!-- <div>{{ title }}</div>
-    <tr *ngFor="let hero of HEROES">
-      <td>{{hero.name}}</td>
-      <td>{{ hero.name }}</td>
-      <div>dsdjshz</div>
-      <div>dsdjshz</div>
-    </tr> -->
   </body>
 </html>

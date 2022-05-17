@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+  </head>
+  <body>
+    <app-bar></app-bar>
+    <div class="middlebar">
+      <div class="middle-center">
+        <!-- <img src="https://localhost:13367/api/image/c7bdd298fb9a6036cd2e79d942bc170f" alt="image">
+        <img src="https://localhost:13367/api/image/tray" alt="image"> -->
+        <!-- Detail window -->
+        <div *ngIf="showDetailWindow" class="DetailWindow letter-style">
+          <div class="DetailWindowCenter">
+            <div class="space-detailwindow">
+              <label for="Machinenaam" style="width:50%" class="label-description letter-style">Machineinfo</label><br><br>
+              <div class="input-block">
+                <input type="text" id="MachineName" value="{{ ActualMachine.machineName }}" required spellcheck="false">
+                <span class="placeholder">Machine naam</span>
+              </div>
+              <div class="input-block">
+                <input type="text" id="IpAddress" value="{{ ActualMachine.ipaddress }}" required spellcheck="false">
+                <span class="placeholder">Ip adres</span>
+              </div>
+              <div class="input-block right">
+                <label class="switch">
+                  <input type="checkbox" name="notiCheckBox" [checked]="ActualMachine.blockNotifications">
+                  <span class="slider round"></span>
+                  <span class="labels" data-on="Aan" data-off="Uit"></span>
+                </label>
+                <input type="text" id="showNotifications" value="Blokkeer meldingen" readonly>
+                <span class="placeholder right"></span>
+              </div>
+              <div class="input-block right">
+                <label class="switch">
+                  <input type="checkbox" name="soundCheckBox" [checked]="ActualMachine.blockSound">
+                  <span class="slider round"></span>
+                  <span class="labels" data-on="Aan" data-off="Uit"></span>
+                </label>
+                <input type="text" id="showNotifications" value="Blokkeer geluid" readonly>
+                <span class="placeholder right"></span>
+              </div>
+              <label for="" class="label-description letter-style space-label">Beschrijving statussen</label><br><br>
+
+              <div *ngFor="let connectedSensor of ActualMachine.connectedSensors">
+                <div class="input-block">
+                  <input type="text" id="SensorName" name="SensorName" value="{{ connectedSensor.sensorName }}" required spellcheck="false">
+                  <span class="placeholder input-getter">Sensor naam</span>
+                  <i class="bi bi-question-circle" style="margin-left: 10px"></i>
+                </div>
+                <div class="input-block">
+                  <input type="text" id="SymbolForUrl" value="{{ connectedSensor.symbolForUrl }}" required spellcheck="false">
+                  <span class="placeholder input-getter">Link naar icon</span>
+                </div>
+                <div class="input-block">
+                  <input type="text" id="ValueTrue" value="{{ connectedSensor.valueTrue }}" required spellcheck="false">
+                  <span class="placeholder input-getter">Beschrijving detecteren</span>
+                </div>
+                <div class="input-block">
+                  <input type="text" id="ValueFalse" value="{{ connectedSensor.valueFalse }}" required spellcheck="false">
+                  <span class="placeholder input-getter">Beschrijving niet detecteren</span>
+                </div>
+                <hr>
+            </div>
+            <i (click)="AddConnectedSensor()"
+                class="bi bi-plus-circle icon-right"></i>
+            </div>
+          </div>
+
+
+            <div class="DetailWindowBottum">
+              <ul>
+                <li><a (click)="SafeDetails()">Opslaan</a></li>
+                <li><a (click)="RemoveDevice()">Verwijderen</a></li>
+                <li><a (click)="CloseDetails()">Annuleren</a></li>
+              </ul>
+            </div>
+        </div>
+
+        <!-- Connected devices -->
+        <div *ngIf="!showDetailWindow" >
+
+        <h1 class="color-style">Verbonden apparaten:</h1>
+          <div *ngFor="let item of ConnectedDevices">
+            <div
+            (click)="OpenDetails(item)"
+            class="reported-device">
+              <div >
+                <h1 class="reported-device-description letter-style">{{ item.machineName }}</h1>
+                <i class="bi bi-wifi reported-device-icon"></i>
+              </div>
+            </div>
+          </div>
+          <i (click)="AddDevice()"
+          class="bi bi-plus-circle icon-right"></i>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="bottombar">
+
+    </div> -->
+  </body>
+</html>
