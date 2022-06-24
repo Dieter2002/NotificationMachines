@@ -1,3 +1,20 @@
+.icon-down{
+  position: relative;
+  font-size: 40px;
+  margin: auto;
+  width: 50%;
+  text-align: center;
+  margin: 0px auto;
+  left: 50%;
+  right: 50%;
+}
+
+/*
+.icon-down:hover{
+  font-size: 40px;
+  background-color: white;
+} */
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -50,4 +67,22 @@ li a:hover {
 
 .letter-style{
   font-family: "Squad Semi Bold", Helvetica, sans-serif;
+}
+
+@media only screen and (max-width: 600px) {
+  ul {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: white;
+    float: none;
+    overflow:hidden;
+  }
+
+  li {
+    float: none;
+    width: 80%;
+    margin: 0;
+    margin-bottom: 10px;
+  }
 }

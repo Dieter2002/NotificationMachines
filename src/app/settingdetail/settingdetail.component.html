@@ -1,0 +1,62 @@
+<div class="DetailWindowCenter">
+  <div class="space-detailwindow">
+    <label for="Machinenaam" style="width:50%" class="label-description letter-style">Machineinfo</label><br><br>
+    <div class="input-block">
+      <input type="text" id="MachineName" value="{{ machine.machineName }}" required spellcheck="false">
+      <span class="placeholder">Machine naam</span>
+    </div>
+    <div class="input-block">
+      <input type="text" id="IpAddress" value="{{ machine.ipaddress }}" required spellcheck="false">
+      <span class="placeholder">Ip adres</span>
+    </div>
+    <div class="input-block right">
+      <label class="switch">
+        <input type="checkbox" name="notiCheckBox" [checked]="machine.blockNotifications">
+        <span class="slider round"></span>
+        <span class="labels" data-on="Aan" data-off="Uit"></span>
+      </label>
+      <input type="text" id="showNotifications" value="Blokkeer meldingen" readonly>
+      <span class="placeholder right"></span>
+    </div>
+    <div class="input-block right">
+      <label class="switch">
+        <input type="checkbox" name="soundCheckBox" [checked]="machine.blockSound">
+        <span class="slider round"></span>
+        <span class="labels" data-on="Aan" data-off="Uit"></span>
+      </label>
+      <input type="text" id="showNotifications" value="Blokkeer geluid" readonly>
+      <span class="placeholder right"></span>
+    </div>
+    <label for="" class="label-description letter-style space-label">Beschrijving statussen</label><br><br>
+
+    <div *ngFor="let connectedSensor of machine.connectedSensors">
+      <div class="input-block">
+        <input type="text" id="SensorName" name="SensorName" value="{{ connectedSensor.sensorName }}" required spellcheck="false">
+        <span class="placeholder input-getter">Sensor naam</span>
+        <i class="bi bi-question-circle" style="margin-left: 10px"></i>
+      </div>
+      <div class="input-block">
+        <input type="text" id="SymbolForUrl" value="{{ connectedSensor.symbolForUrl }}" required spellcheck="false">
+        <span class="placeholder input-getter">Link naar icon</span>
+      </div>
+      <div class="input-block">
+        <input type="text" id="ValueTrue" value="{{ connectedSensor.valueTrue }}" required spellcheck="false">
+        <span class="placeholder input-getter">Beschrijving detecteren</span>
+      </div>
+      <div class="input-block">
+        <input type="text" id="ValueFalse" value="{{ connectedSensor.valueFalse }}" required spellcheck="false">
+        <span class="placeholder input-getter">Beschrijving niet detecteren</span>
+      </div>
+      <hr>
+  </div>
+  <i (click)="AddConnectedSensor(machine)"
+      class="bi bi-plus-circle icon-right"></i>
+  </div>
+</div>
+<div class="DetailWindowBottum">
+  <ul>
+    <li><a (click)="SafeDetails(machine)">Opslaan</a></li>
+    <li><a (click)="RemoveDevice(machine)">Verwijderen</a></li>
+    <li><a (click)="CloseDetails()">Annuleren</a></li>
+  </ul>
+</div>

@@ -7,12 +7,10 @@ import {
 } from '@angular/animations';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { BekidanFillerItem } from '../../models/BekidanFillerItem';
 import { NotificationMachine } from '../../models/NotificationMachine';
 import { GlobalSettingsService } from 'src/app/services/services';
-// import { Config, ConfigService } from '../Service/service';
 
 export const fadeAnimation = trigger('popOverState', [
   transition(':enter', [
@@ -24,47 +22,11 @@ export const fadeAnimation = trigger('popOverState', [
   )
 ]);
 
-// const listAnimation = trigger('listAnimation', [
-//   transition('* <=> *', [
-//     query(':enter',
-//       [style({ opacity: 0 }), stagger('60ms', animate('600ms ease-out', style({ opacity: 1 })))],
-//       { optional: true }
-//     ),
-//     query(':leave',
-//       animate('200ms', style({ opacity: 0 })),
-//       { optional: true }
-//     )
-//   ])
-// ]);
-
 @Component({
   selector: 'app-hero-detail',
   templateUrl: './hero-detail.component.html',
   styleUrls: ['./hero-detail.component.css'],
   animations: [
-    // trigger('popOverState', [
-    //   state('show', style({
-    //     height: '200px',
-    //     opacity: 0,
-    //     // transition: 'translateY(100)'
-    //   })),
-    //   state('hide',   style({
-    //     height: '0px',
-    //     opacity: 1,
-    //     // transition: 'translatex(-100)'
-    //   })),
-    //   transition('show => hide', animate('2000ms ease-out')),
-    //   transition('hide => show', animate('2000ms ease-in'))
-    // ]),
-    // trigger('popOverState', [
-    //   transition(':enter', [
-    //     style({ opacity: 0, }), animate('300ms', style({ opacity: 1 }))
-    //   ]
-    //   ),
-    //   transition(':leave',
-    //     [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]
-    //   )
-    // ]),
     trigger('simpleFadeAnimation', [
       // the "in" style determines the "resting" state of the element when it is visible.
       state('in', style({ opacity: 1 })),
@@ -79,19 +41,9 @@ export const fadeAnimation = trigger('popOverState', [
         animate(400, style({ transform: 'translateX(+100%)' })))
     ])
   ],
-  // animations: [
-  //   // trigger('popOverState', [fadeAnimation]),
-  //   trigger('listAnimation', [listAnimation])
-
-  // ]
-
 })
 
-
-
 export class HeroDetailComponent implements OnInit {
-  title = "WELKOM";
-
   show = false;
   seconds = 3;
 
@@ -99,9 +51,10 @@ export class HeroDetailComponent implements OnInit {
 
   public notifications!: Array<NotificationMachine>;
 
-  // private urlForApi = "https://localhost:13367/api/BekidanFillerItems/"
+  // private urlForApi = "https://localhost:13367/api/MachineItems/"
   private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/BekidanFillerItems/"
   public soundPlaying = false
+  private lastTimeCall = 0
 
   constructor(private router: Router,
     private http: HttpClient,
@@ -110,8 +63,7 @@ export class HeroDetailComponent implements OnInit {
     this.notifications = [(no)]
     no.visible = false
 
-    var timerr = timer(0,5000);
-    timerr.subscribe(() => this.DataCall());
+    let timerId = setInterval(() => this.DataCall(), 5000);
   }
 
   get stateName() {
@@ -122,6 +74,9 @@ export class HeroDetailComponent implements OnInit {
     if(this.globalSettingsService.YourComponentNameLoadedAlready){
       this.globalSettingsService.YourComponentNameLoadedAlready=true;
     }
+
+    this.lastTimeCall = Date.now() / 1000;
+    this.DataCall()
   }
 
   HideShowBar(){
@@ -142,8 +97,12 @@ export class HeroDetailComponent implements OnInit {
   }
 
   _displayItems(data: [BekidanFillerItem]) {
-    var audio = new Audio('http://localhost/samsung-s10-spaceline-notification.mp3');
-    audio.play();
+    if (Date.now() / 1000 + 5 > this.lastTimeCall ){
+      this.lastTimeCall = Date.now()
+    }
+    else{
+      return
+    }
 
     if (data.length < 1){
       this.notifications.splice(0);
@@ -154,14 +113,19 @@ export class HeroDetailComponent implements OnInit {
     data.forEach(async (item: any) => {
       let newTodo: BekidanFillerItem = Object.assign(new BekidanFillerItem(), item)
 
-      if(!this.notifications.some(x => x.machineSensorId === newTodo.machineSensorId)){
+      if (newTodo.blockNotifications){
+        return;
+      }
 
+      if(!this.notifications.some(x => x.machineSensorId === newTodo.machineSensorId)){
         var not = new NotificationMachine("exclamation-triangle", newTodo.machineName, newTodo.machineSensorId,
         newTodo.sensorName, newTodo.sensorValue, newTodo.information, newTodo.symbolForUrl, "critic");
 
         if (!newTodo.sensorValue){
           this.notifications.push(not);
-          itemAdded = true
+          if (!newTodo.blockSound){
+            itemAdded = true
+          }
         }
       }
       else{
@@ -181,33 +145,10 @@ export class HeroDetailComponent implements OnInit {
     if (itemAdded){
       console.log(this.soundPlaying)
       if (!this.soundPlaying){
-          this.PlayBeep()
-          console.log("Beep")
-          return
+          var audio = new Audio('https://storage.cloudkwekerijbloemendaal.com/Sounds/samsung-s10-spaceline-notification.mp3');
+          audio.play();
       }
     }
-  }
-
-  PlayBeep(){
-    var audioCtx = new(window.AudioContext)();
-
-    var oscillator = audioCtx.createOscillator();
-    var gainNode = audioCtx.createGain();
-
-    oscillator.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    gainNode.gain.value = 1;
-    oscillator.frequency.value = 400;
-    oscillator.type = "sine";
-
-    oscillator.start();
-
-    setTimeout(
-      this.HandleSoundSetting,
-      1000,
-      oscillator
-    );
   }
 
   HandleSoundSetting(oscillator: OscillatorNode){

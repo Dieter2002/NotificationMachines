@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
-  <div class="topbar">
+  <div *ngIf="mobileDetected">
+    <i *ngIf="!showBar" (click)="HideShowBar()" class="bi bi-chevron-compact-down icon-down"></i>
+    <i *ngIf="showBar" (click)="HideShowBar()" class="bi bi-chevron-up icon-down"></i>
+  </div>
+
+  <div *ngIf="showBar" class="topbar">
     <div class="topbar-right">
       <ul>
         <li><a (click)="BackToHome()" class="letter-style li-a-size" >home</a></li>

@@ -1,21 +1,26 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificationMachine } from '../../models/NotificationMachine';
 import { ConnectedSensors } from '../../models/BekidanFillerItem';
-import { Settings } from '../../models/Settings';
+import { SettingMachine } from '../../models/SettingMachine';
+import { SettingdetailComponent } from '../../settingdetail/settingdetail.component';
 
 @Component({
   selector: 'app-settings',
+  template: '<app-child [ActualMachine]="ActualMachine"></app-child>',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
-  public ConnectedDevices: Array<Settings> = [];
+  @ViewChild(SettingdetailComponent) child: any;
 
-  public ActualMachine: Settings = this.ConnectedDevices[0];
+  public ConnectedDevices: Array<SettingMachine> = [];
+
+  public ActualMachine: SettingMachine = this.ConnectedDevices[0];
 
   public showDetailWindow = false
+  private lastTimeCall = 0
 
   private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/Settings/"
   // private urlForApi = "https://localhost:13367/api/Settings/"
@@ -26,9 +31,11 @@ export class SettingsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.DataCall();
+
+    this.ActualMachine
   }
 
-  OpenDetails(item?: Settings){
+  OpenDetails(item?: SettingMachine){
     if (item != null)
       this.ActualMachine = item
       this.showDetailWindow = true
@@ -38,7 +45,7 @@ export class SettingsComponent implements OnInit {
     this.showDetailWindow = false
   }
 
-  async SafeDetails(){
+  async SafeDetails(item: SettingMachine){
     const machineName = document.getElementById('MachineName') as HTMLInputElement;
     const notiCheckBox = document.querySelector<HTMLInputElement>("input[name=notiCheckBox]");
     const soundCheckBox = document.querySelector<HTMLInputElement>("input[name=soundCheckBox]");
@@ -48,9 +55,9 @@ export class SettingsComponent implements OnInit {
     //   return
     // }
 
-    this.ActualMachine.machineName = machineName?.value
-    this.ActualMachine.blockNotifications = notiCheckBox?.checked
-    this.ActualMachine.blockSound = soundCheckBox?.checked
+    item.machineName = machineName?.value
+    item.blockNotifications = notiCheckBox?.checked
+    item.blockSound = soundCheckBox?.checked
 
     // Update existing item
     if(this.ActualMachine.id != ""){
@@ -65,12 +72,12 @@ export class SettingsComponent implements OnInit {
     await this.DataAdd(this.ActualMachine)
   }
 
-  CheckDeviceExist(item: string): boolean{
+  private CheckDeviceExist(item: string): boolean{
     return this.ConnectedDevices.some(x => x.machineName == item);
   }
 
-  RemoveDevice(){
-    this.http.delete(this.urlForApi+this.ActualMachine.id)
+  public RemoveDevice(item: SettingMachine){
+    this.http.delete(this.urlForApi+item.id)
     .subscribe({
         next: data => {
           this.showDetailWindow = false
@@ -84,14 +91,14 @@ export class SettingsComponent implements OnInit {
     });
   }
 
-  AddDevice(){
-    var setting = new Settings();
+  public AddDevice(){
+    var setting = new SettingMachine();
     setting.connectedSensors.push(new ConnectedSensors)
     this.ActualMachine = setting
     this.showDetailWindow = true
   }
 
-  AddConnectedSensor(){
+  public AddConnectedSensor(){
     this.ActualMachine.connectedSensors.push(new ConnectedSensors)
   }
 
@@ -99,13 +106,13 @@ export class SettingsComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
-  _displayItems(data: [Settings]) {
-    data.forEach((item: Settings) => {
-      this.ConnectedDevices.push(Object.assign(new Settings(), item))
+  _displayItems(data: [SettingMachine]) {
+    data.forEach((item: SettingMachine) => {
+      this.ConnectedDevices.push(Object.assign(new SettingMachine(), item))
     });
   }
 
-  DataPrepair(item: Settings) : Settings{
+  DataPrepair(item: SettingMachine) : SettingMachine{
     var listInputs = ["SensorName", "SymbolForUrl", "ValueTrue", "ValueFalse"]
 
     var sensorNames = document.querySelectorAll<HTMLInputElement>("input[name="+listInputs[0]+"]");
@@ -128,24 +135,24 @@ export class SettingsComponent implements OnInit {
     return item
   }
 
-  async DataAdd(item: Settings){
+  async DataAdd(item: SettingMachine){
     const options = {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     , 'Content-Type': 'application/json'}};
 
     var newItem = this.DataPrepair(item)
 
-    this.http.post<Settings>(this.urlForApi, JSON.stringify(newItem), options).subscribe(
-    (t: Settings) => {this.ConnectedDevices.push(newItem)});
+    this.http.post<SettingMachine>(this.urlForApi, JSON.stringify(newItem), options).subscribe(
+    (t: SettingMachine) => {this.ConnectedDevices.push(newItem)});
   }
 
-  async DataUpdate(item: Settings){
+  async DataUpdate(item: SettingMachine){
     const options = {headers: {"Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept, Authorization"
     , 'Content-Type': 'application/json'}};
 
     var newItem = this.DataPrepair(item)
 
-    this.http.put<Settings>(this.urlForApi+newItem.id, JSON.stringify(newItem), options).subscribe(
-    (t: Settings) => console.log(t));
+    this.http.put<SettingMachine>(this.urlForApi+newItem.id, JSON.stringify(newItem), options).subscribe(
+    (t: SettingMachine) => console.log(t));
   }
 
   async DataCall() {

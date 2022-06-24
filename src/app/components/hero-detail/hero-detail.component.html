@@ -13,8 +13,8 @@
   </head>
   <body>
     <div *ngIf="showBar">
-      <app-bar></app-bar>
-    </div>
+        <app-bar></app-bar>
+      </div>
     <!-- <div class="topbar">
       <div class="topbar-right">
         <ul>
@@ -25,9 +25,6 @@
     </div> -->
 
     <div class="middlebar color-style">
-      <i *ngIf="!showBar" (click)="HideShowBar()" class="bi bi-chevron-compact-down icon-down"></i>
-      <i *ngIf="showBar" (click)="HideShowBar()" class="bi bi-chevron-up icon-down"></i>
-
       <div class="bar">
         <td class="bar id">Type</td>
         <td class="bar name">Machine</td>

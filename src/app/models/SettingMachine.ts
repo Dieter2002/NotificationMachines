@@ -1,6 +1,6 @@
 import { ConnectedSensors } from "./BekidanFillerItem";
 
-export class Settings{
+export class SettingMachine{
   id: string = ""
   machineName: string = "";
   ipaddress: string = "";

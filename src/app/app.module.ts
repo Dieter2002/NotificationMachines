@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './components/settings/settings.component';
 import { BarComponent } from './components/bar/bar.component';
 import { ImagesComponent } from './components/images/images.component';
+import { SettingdetailComponent } from './settingdetail/settingdetail.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { ImagesComponent } from './components/images/images.component';
     HomeComponent,
     SettingsComponent,
     BarComponent,
-    ImagesComponent
+    ImagesComponent,
+    SettingdetailComponent
   ],
   imports: [
     BrowserModule,
