@@ -98,7 +98,7 @@ export class HeroDetailComponent implements OnInit {
 
   _displayItems(data: [BekidanFillerItem]) {
     if (Date.now() / 1000 + 5 > this.lastTimeCall ){
-      this.lastTimeCall = Date.now()
+      this.lastTimeCall = Date.now() /1000
     }
     else{
       return
