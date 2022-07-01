@@ -53,6 +53,14 @@ export class BarComponent implements OnInit {
     this.router.navigateByUrl('images');
   }
 
+  NavToTest(){
+    this.router.navigateByUrl('test');
+  }
+
+  NavToProductionOverview(){
+    this.router.navigateByUrl('productionoverview');
+  }
+
 
 
 }

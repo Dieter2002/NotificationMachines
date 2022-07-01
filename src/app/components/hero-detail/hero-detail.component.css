@@ -1,15 +1,18 @@
 html{
-  overflow: hidden;
+  /* overflow: hidden; */
+  height: 90%;
 }
 
 body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
   width: 100%;
   margin: 0px;
-  /* background: black; */
+  padding: 0px;
   overflow: hidden
 }
 
@@ -21,7 +24,7 @@ body {
 
 .middlebar{
   background-color: #F1F1F1;
-  height: 100%;
+  height: 100vh;
   margin-bottom: 150px;
   overflow: auto;
   overflow-y: hidden;
@@ -47,46 +50,61 @@ body {
 }
 
 .bar{
-  /* margin: 20px; */
   margin-left: 150px;
   padding: 20px;
-  /* padding-top: 0px; */
   font-size: 40px;
   font-weight: bold;
 }
 
-.bar.border{
-  border: 1px solid #F0FFFF;
+.flex-container {
+  display: flex;
+  /* margin-left: 150px; */
+  padding: 20px;
+  font-weight: bold;
 }
 
-.bar.id{
-  width: 160px;
+.flex-container > div {
+  background-color: #f1f1f1;
+  margin: 10px;
+  padding: 20px;
+  font-size: 2em;
 }
 
-.bar.message{
-  width: 590px;
+.barspace{
+  flex-grow: 1;
+  margin-left: 40px !important;
+
+}
+.barid{
+  flex-grow: 1;
+  margin-left: 0px !important;
+
+}
+.barname{
+  flex-grow: 2;
+  /* margin-left: 0px !important;
+  padding-left: 0px !important; */
+  margin-right: 60px !important;
+
+}
+.barmessage{
+  flex-grow: 5;
+}
+.barsetings{
+  width: 30px;
 }
 
-.bar.name{
-  width: 300px;
-}
-
-.bar.settings{
-  /* position: absolute; */
-  /* margin-left: auto; */
-  right: 0px;
-  /* float: right; */
-}
-
-.bar.settings:hover{
-  background-color: white;
+.hover:hover{
+  background-color: #00365F;
+  color: #00365F;
 }
 
 .NotificationTray {
+  display: flex;
   transition: 0.5s;
   cursor: pointer;
   margin: 20px;
-  padding: 30px;
+  padding: 50px;
   font-size: 30px;
 }
 
@@ -111,37 +129,44 @@ body {
   color: #ffb103;
 }
 
-.NotificationTray.id {
+.NotificationTraysymbol {
+  flex-grow: 1;
+  /* height: 30px; */
   text-align: center;
-  margin-left: 30px;
+  margin-bottom: 0px !important;
+  width: 10px;
+}
+
+.NotificationTrayid {
+  flex-grow: 1;
   margin-right: 30px;
-  top: 0px;
   height: 30px;
-  padding: 0%;
 }
 
 .NotificationTray .imgVector{
   position: relative;
-  margin-left: 100px; margin-right: 80px;
+  margin-left: 70px;
   bottom: -5px;
-  height: 30px;
   width: 128px;
 }
 
 .NotificationTray .imgVectorDone{
-  /* filter: invert(40%) sepia(53%) saturate(1728%) hue-rotate(41deg) brightness(95%) contrast(99%); */
   filter: invert(23%) sepia(97%) saturate(1801%) hue-rotate(53deg) brightness(97%) contrast(104%);
 }
 
-.NotificationTray.machine {
-  width: 28.5%;
-  max-width: 30%;
-  padding: 0%;
+.NotificationTraymachine {
+  flex-grow: 2;
+  /* width: 350px; */
+  padding-left: 20px;
+  padding-right: 40px;
+  height: 30px;
 }
 
-.NotificationTray.message {
-  margin-left: 40px;
+.NotificationTraymessage {
+  flex-grow: 5;
+  /* margin-left: 40px; */
   width: 390px;
+  height: 30px;
 }
 
 .NotificationTray.critic:hover{
@@ -154,12 +179,11 @@ body {
 }
 
 .button {
-  /* margin-left: auto;
-  margin-right: auto; */
   position: absolute;
   border: none;
-  right: 40px;
   bottom: 40px;
+  right: 20%;
+  margin-right: 50px;
   display: block;
   border-radius: 10px;
   background-color: #7A8401;

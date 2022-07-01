@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <div class="position">
   <div *ngIf="mobileDetected">
     <i *ngIf="!showBar" (click)="HideShowBar()" class="bi bi-chevron-compact-down icon-down"></i>
     <i *ngIf="showBar" (click)="HideShowBar()" class="bi bi-chevron-up icon-down"></i>
@@ -10,10 +11,12 @@
       <ul>
         <li><a (click)="BackToHome()" class="letter-style li-a-size" >home</a></li>
         <li><a (click)="NavToSettings()" class="letter-style li-a-size" >settings</a></li>
-        <li><a class="letter-style li-a-size" >vertalingen</a></li>
+        <li><a (click)="NavToTest()" class="letter-style li-a-size" >test</a></li>
         <li><a (click)="NavToImages()" class="letter-style li-a-size" >images</a></li>
+        <li><a (click)="NavToProductionOverview()" class="letter-style li-a-size" >production</a></li>
         <li><a class="letter-style li-a-size" >contact</a></li>
       </ul>
     </div>
   </div>
+</div>
 </html>

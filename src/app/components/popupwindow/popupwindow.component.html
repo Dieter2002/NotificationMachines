@@ -1,0 +1,14 @@
+<div [@openClose]="isOpen ? 'open' : 'closed'"
+(@openClose.start)="onAnimationEventStart($event)"
+(@openClose.done)="onAnimationEventDone($event)"
+class="middle color-style">
+  <div class="center">
+    <div class="middle-message">
+      <h1>{{message}}</h1>
+    </div>
+    <div class="bottom">
+      <button (click)="ClosePopUp()" class="button"> Ga verder</button>
+    </div>
+
+  </div>
+</div>

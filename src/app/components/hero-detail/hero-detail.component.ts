@@ -52,7 +52,7 @@ export class HeroDetailComponent implements OnInit {
   public notifications!: Array<NotificationMachine>;
 
   // private urlForApi = "https://localhost:13367/api/MachineItems/"
-  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/BekidanFillerItems/"
+  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/MachineItems/"
   public soundPlaying = false
   private lastTimeCall = 0
 
@@ -97,8 +97,9 @@ export class HeroDetailComponent implements OnInit {
   }
 
   _displayItems(data: [BekidanFillerItem]) {
-    if (Date.now() / 1000 + 5 > this.lastTimeCall ){
-      this.lastTimeCall = Date.now() /1000
+    if ((Date.now() / 1000) + 50000 > this.lastTimeCall ){
+      this.lastTimeCall = Date.now() / 1000
+      console.log(this.lastTimeCall)
     }
     else{
       return
@@ -143,7 +144,6 @@ export class HeroDetailComponent implements OnInit {
     });
     // After all done, beep
     if (itemAdded){
-      console.log(this.soundPlaying)
       if (!this.soundPlaying){
           var audio = new Audio('https://storage.cloudkwekerijbloemendaal.com/Sounds/samsung-s10-spaceline-notification.mp3');
           audio.play();

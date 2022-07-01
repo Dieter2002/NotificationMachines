@@ -15,6 +15,9 @@
     <div *ngIf="showBar">
         <app-bar></app-bar>
       </div>
+      <div>
+        <app-overview></app-overview>
+      </div>
     <!-- <div class="topbar">
       <div class="topbar-right">
         <ul>
@@ -25,11 +28,13 @@
     </div> -->
 
     <div class="middlebar color-style">
-      <div class="bar">
-        <td class="bar id">Type</td>
-        <td class="bar name">Machine</td>
-        <td class="bar message">Melding</td>
-        <td (click)="OpenSetting()" class="bar settings bi bi-sliders"></td>
+      <div class="flex-container">
+        <div class="barspace"></div>
+        <div class="barid">Type</div>
+        <div class="barname">Machine</div>
+        <div class="barmessage">Melding</div>
+        <div class="barsettings bi bi-sliders hover"
+            (click)="OpenSetting()"></div>
       </div>
 
       <section>
@@ -41,14 +46,14 @@
           >
             <!-- <td><i class="bi bi-check-circle"></i></td> -->
             <!-- <td class="bi bi-exclamation-triangle"></td> -->
-            <td class="bi bi-{{item.icon}}" style="margin-bottom: 100px;"></td>
+            <td class="NotificationTraysymbol bi bi-{{item.icon}}" style="margin-bottom: 100px;"></td>
 
             <!-- <td class="NotificationTray id">#{{ item.id }}</td> -->
-            <td class="NotificationTray id">
+            <td class="NotificationTrayid">
               <img class="imgVector" [ngClass]="{'imgVectorDone' : item.fixed}" src="{{item.symbolForUrl}}">
             </td>
-            <td class="NotificationTray machine">{{ item.machine }}</td>
-            <td class="NotificationTray message">{{ item.message }}</td>
+            <td class="NotificationTraymachine">{{ item.machine }}</td>
+            <td class="NotificationTraymessage">{{ item.message }}</td>
           </div>
         </div>
       </section>

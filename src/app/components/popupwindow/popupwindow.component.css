@@ -1,0 +1,67 @@
+.middle{
+  left: 0;
+  right: 0;
+  top: 0;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  margin: auto;
+  /* background-color: blue; */
+  align-items: center;
+  background: rgba(0,0,0,0.5);
+}
+
+.center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  width: 30%;
+  height: 30%;
+  transform: translate(-50%, -50%);
+  background-color: #ffffff;
+  text-align: center;
+  border-radius: 10px;
+  border-color: darkgray;
+  border-width: 10px;
+  display: block;
+}
+
+.color-style{
+  font-family: "Squad Semi Bold", Helvetica, sans-serif;
+  color: #00365F;
+}
+
+.middle-message{
+  top: 0;
+  /* background-color: black; */
+  height: 67%;
+  width: 100%;
+  margin-top: 0px;
+  text-align: center;
+  padding-top: 20px;
+  border-radius: 20px;
+}
+
+.bottom{
+  /* background-color: black; */
+  height: 20%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.button{
+  border: none;
+  padding: 10px 25px;
+  margin:auto;
+  display:block;
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+.button:hover{
+  background-color: #00365f;
+  color: white;
+}

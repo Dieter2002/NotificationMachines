@@ -7,7 +7,9 @@ import { HeroDetailComponent } from './components/hero-detail/hero-detail.compon
 import { HeroOverviewComponent } from './components/hero-overview/hero-overview.component';
 import { HomeComponent } from './components/home/home.component';
 import { ImagesComponent } from './components/images/images.component';
+import { ProductionoverviewComponent } from './components/productionoverview/productionoverview.component';
 import { SettingsComponent } from './components/settings/settings.component';
+import { TestComponent } from './test/test.component';
 
 const routes: Routes = [
   // { path: '', component: AppComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: '', component: HeroDetailComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'images', component: ImagesComponent },
+  { path: 'test', component: TestComponent },
+  { path: 'productionoverview', component: ProductionoverviewComponent },
   {
     path: "home",
     component: HomeComponent,

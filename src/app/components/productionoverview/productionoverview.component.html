@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <app-bar></app-bar>
+  <div class="middle">
+    <div class="middle-center">
+      <table class="table-center styled-table">
+        <thead>
+            <tr>
+              <th *ngFor="let column of headers">
+                {{column}}
+              </th>
+            </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ProductionLines; index as i">
+            <td contenteditable='true'>
+              {{item.typeName}}
+            </td>
+            <!-- <div class="hover-between-cell"></div> -->
+            <td>
+              {{item.quantity}}
+            </td>
+          </tr>
+            <!-- <tr class="active-row">
+                <td>Melissa</td>
+                <td>5150</td>
+            </tr> -->
+            <!-- and so on... -->
+        </tbody>
+    </table>
+    </div>
+
+
+  </div>
+
+
+
+</body>
+</html>

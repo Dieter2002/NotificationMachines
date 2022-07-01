@@ -15,6 +15,10 @@
           <app-settingdetail [machine]="ActualMachine"></app-settingdetail>
         </div>
 
+        <div *ngIf="showPopUp">
+          <app-popupwindow [message]="MessagePopUp"></app-popupwindow>
+        </div>
+
         <!-- Connected devices -->
         <div *ngIf="!showDetailWindow" >
         <h1 class="color-style">Verbonden apparaten:</h1>

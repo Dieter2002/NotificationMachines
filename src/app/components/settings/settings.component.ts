@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { NotificationMachine } from '../../models/NotificationMachine';
 import { ConnectedSensors } from '../../models/BekidanFillerItem';
 import { SettingMachine } from '../../models/SettingMachine';
-import { SettingdetailComponent } from '../../settingdetail/settingdetail.component';
+import { SettingdetailComponent } from 'src/app/components/settingdetail/settingdetail.component';
+import { BarComponent } from 'src/app/components/bar/bar.component';
+import { PopupwindowComponent } from '../popupwindow/popupwindow.component';
 
 @Component({
   selector: 'app-settings',
@@ -14,13 +16,15 @@ import { SettingdetailComponent } from '../../settingdetail/settingdetail.compon
 })
 export class SettingsComponent implements OnInit {
   @ViewChild(SettingdetailComponent) child: any;
+  @ViewChild(PopupwindowComponent) popup: PopupwindowComponent | undefined;
 
   public ConnectedDevices: Array<SettingMachine> = [];
 
   public ActualMachine: SettingMachine = this.ConnectedDevices[0];
+  public MessagePopUp = ""
 
   public showDetailWindow = false
-  private lastTimeCall = 0
+  public showPopUp = false
 
   private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/Settings/"
   // private urlForApi = "https://localhost:13367/api/Settings/"
@@ -31,8 +35,6 @@ export class SettingsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.DataCall();
-
-    this.ActualMachine
   }
 
   OpenDetails(item?: SettingMachine){
@@ -45,15 +47,25 @@ export class SettingsComponent implements OnInit {
     this.showDetailWindow = false
   }
 
-  async SafeDetails(item: SettingMachine){
+  ClosePopUp(){
+    this.showPopUp = false
+  }
+
+  async SafeDetails(item?: SettingMachine){
+    if (item == null)
+      return;
+
     const machineName = document.getElementById('MachineName') as HTMLInputElement;
     const notiCheckBox = document.querySelector<HTMLInputElement>("input[name=notiCheckBox]");
     const soundCheckBox = document.querySelector<HTMLInputElement>("input[name=soundCheckBox]");
 
-    // if(this.CheckDeviceExist(input?.value)){
-    //   this.showDetailWindow = false
-    //   return
-    // }
+    if(this.CheckDeviceExist(machineName?.value)){
+      this.MessagePopUp = "Item already axist"
+      if (item.newCreated){
+        this.showPopUp = true;
+        return
+      }
+    }
 
     item.machineName = machineName?.value
     item.blockNotifications = notiCheckBox?.checked
@@ -76,7 +88,10 @@ export class SettingsComponent implements OnInit {
     return this.ConnectedDevices.some(x => x.machineName == item);
   }
 
-  public RemoveDevice(item: SettingMachine){
+  public RemoveDevice(item?: SettingMachine){
+    if (item == null)
+      return;
+
     this.http.delete(this.urlForApi+item.id)
     .subscribe({
         next: data => {
@@ -92,7 +107,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public AddDevice(){
-    var setting = new SettingMachine();
+    var setting = new SettingMachine(true);
     setting.connectedSensors.push(new ConnectedSensors)
     this.ActualMachine = setting
     this.showDetailWindow = true
@@ -108,7 +123,7 @@ export class SettingsComponent implements OnInit {
 
   _displayItems(data: [SettingMachine]) {
     data.forEach((item: SettingMachine) => {
-      this.ConnectedDevices.push(Object.assign(new SettingMachine(), item))
+      this.ConnectedDevices.push(Object.assign(new SettingMachine(false), item))
     });
   }
 
@@ -152,7 +167,7 @@ export class SettingsComponent implements OnInit {
     var newItem = this.DataPrepair(item)
 
     this.http.put<SettingMachine>(this.urlForApi+newItem.id, JSON.stringify(newItem), options).subscribe(
-    (t: SettingMachine) => console.log(t));
+    (t: SettingMachine) => this.LogError(t));
   }
 
   async DataCall() {
@@ -160,6 +175,10 @@ export class SettingsComponent implements OnInit {
       .then(response => response.json())
       .then(data => this._displayItems(data))
       .catch(error => console.error('Unable to get items.', error));
+  }
+
+  LogError(item: SettingMachine){
+
   }
 }
 

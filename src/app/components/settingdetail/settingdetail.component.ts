@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SettingMachine } from 'src/app/models/SettingMachine';
-import { SettingsComponent } from '../components/settings/settings.component';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-settingdetail',
@@ -10,7 +10,7 @@ import { SettingsComponent } from '../components/settings/settings.component';
 export class SettingdetailComponent implements OnInit {
   public ConnectedDevices: Array<SettingMachine> = [];
 
-  @Input() machine: SettingMachine = new SettingMachine;
+  @Input() machine: SettingMachine | undefined;
 
   public showDetailWindow = true;
 
@@ -19,14 +19,14 @@ export class SettingdetailComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  AddConnectedSensor(item: SettingMachine){
+  AddConnectedSensor(item?: SettingMachine){
     this.settingsComponent.AddConnectedSensor()
   }
-  SafeDetails(item: SettingMachine){
+  SafeDetails(item?: SettingMachine){
     this.settingsComponent.SafeDetails(item)
 
   }
-  RemoveDevice(item: SettingMachine){
+  RemoveDevice(item?: SettingMachine){
     this.settingsComponent.RemoveDevice(item)
   }
   CloseDetails(){

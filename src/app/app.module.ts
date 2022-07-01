@@ -12,7 +12,12 @@ import { RouterModule } from '@angular/router';
 import { SettingsComponent } from './components/settings/settings.component';
 import { BarComponent } from './components/bar/bar.component';
 import { ImagesComponent } from './components/images/images.component';
-import { SettingdetailComponent } from './settingdetail/settingdetail.component';
+import { OverviewComponent } from './components/overview/overview.component';
+import { ProductionoverviewComponent } from './components/productionoverview/productionoverview.component';
+import { SettingdetailComponent } from './components/settingdetail/settingdetail.component';
+import { TestComponent } from './test/test.component';
+import { PopupwindowComponent } from './components/popupwindow/popupwindow.component';
+import { LoggingService } from './services/LoggingService';
 
 
 @NgModule({
@@ -24,7 +29,11 @@ import { SettingdetailComponent } from './settingdetail/settingdetail.component'
     SettingsComponent,
     BarComponent,
     ImagesComponent,
-    SettingdetailComponent
+    SettingdetailComponent,
+    OverviewComponent,
+    ProductionoverviewComponent,
+    PopupwindowComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +42,7 @@ import { SettingdetailComponent } from './settingdetail/settingdetail.component'
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [LoggingService],
   bootstrap: [AppComponent],
   exports: [AppRoutingModule]
 })
