@@ -121,7 +121,6 @@ div.input-block input:focus + span.placeholder {
 /* Sliders */
 .switch {
   content: 's';
-
   position: relative;
   display: inline-block;
   margin-left: 10px;

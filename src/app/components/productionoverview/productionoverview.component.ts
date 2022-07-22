@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductionOverview } from 'src/app/models/ProductionOverview';
+import { ProductionOverviewPerDay } from 'src/app/models/ProductionOverviewPerDay';
 
 @Component({
   selector: 'app-productionoverview',
@@ -7,44 +7,80 @@ import { ProductionOverview } from 'src/app/models/ProductionOverview';
   styleUrls: ['./productionoverview.component.css']
 })
 export class ProductionoverviewComponent implements OnInit {
-  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/ProductionOverview/"
+  // private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/ProductionOverview/"
+  private urlForApi = "https://localhost:13367/api/ProductionOverview/"
 
-  public ProductionLines: Array<ProductionOverview> = [];
+  public ProductionLines: Array<ProductionOverviewPerDay> = [];
+  public AvailableYears: Array<number> = [2020, 2021]
+  private ChosenYear: number = 2022;
 
-  elems = [
-    {id: 1, name:'Superman'},
-    {id: 2, name:'Batman'},
-    {id: 5, name:'BatGirl'},
-  ];
+  public selectedDevice: any;
+  public refreshProduction: boolean = false
+  public openDetail: boolean = false
 
-  headers = ["Soort naam", "Hoeveelheid"];
+  headers = ["Soort naam", "Hoeveelheid (in trays)", "Tijd"];
 
-  rows = [
-    {
-      "ID" : "1",
-      "Name" : "Rahul",
-      "Age" : "21",
-      "Gender" : "Male",
-      "Country" : "India"
-    },
-    {
-      "ID" : "2",
-      "Name" : "Ajay",
-      "Age" : "25",
-      "Gender" : "Male",
-      "Country" : "India"
-    },
-  ]
+  constructor() {
+    let timerId = setInterval(() => this.UpdateProductionOverview(), 5000);
+  }
 
-  constructor() { }
+  GetProductionOverview(): Array<ProductionOverviewPerDay>{
+    return this.ProductionLines
+  }
+
+  GetProductionYears() : Array<number>{
+    var allFoundYears = this.ProductionLines.map(x => x.timeStampStart.getFullYear())
+    var allUniqueYears = Array.from(new Set(allFoundYears))
+    return allUniqueYears
+  }
+
+  SetChosenYear(item: number){
+    this.ChosenYear = item
+    console.log(item)
+  }
+
+  onChangeSelect(deviceValue: any) {
+    const target = deviceValue.target.value as HTMLTextAreaElement;
+    this.ChosenYear = target as unknown as number
+  }
+
+  OpenDetail(deviceValue: ProductionOverviewPerDay) {
+    console.log(deviceValue)
+    this.openDetail = !this.openDetail
+  }
+
+  onChangeSwitch(deviceValue: any) {
+    this.refreshProduction = !this.refreshProduction
+  }
+
+  setTimeFormat(dateTime: Date) : string{
+    return dateTime.getMonth() + "-" + dateTime.getDay() + " " + dateTime.getHours() + ":" + dateTime.getMinutes()
+  }
 
   async ngOnInit(): Promise<void> {
     await this.DataCall();
   }
 
-  _displayItems(data: [ProductionOverview]) {
-    data.forEach((item: ProductionOverview) => {
-      this.ProductionLines.push(Object.assign(new ProductionOverview(), item))
+  UpdateProductionOverview(){
+    if (this.refreshProduction){
+      this.DataCall()
+    }
+  }
+
+  _displayItems(data: [ProductionOverviewPerDay]) {
+    this.ProductionLines = []
+
+    data.forEach((item: ProductionOverviewPerDay) => {
+      const prodItem = Object.assign( new ProductionOverviewPerDay(), {
+        id: item.id,
+        idProd: item.id,
+        timeStampStart: new Date(item.timeStampStart),
+        timeStampStop: new Date(item.timeStampStop),
+        typeName: item.typeName,
+        quantityTrays: item.quantityTrays,
+      });
+
+      this.ProductionLines.push(Object.assign(new ProductionOverviewPerDay(), prodItem))
     });
   }
 

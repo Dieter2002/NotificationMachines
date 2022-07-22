@@ -24,7 +24,6 @@ export class SettingdetailComponent implements OnInit {
   }
   SafeDetails(item?: SettingMachine){
     this.settingsComponent.SafeDetails(item)
-
   }
   RemoveDevice(item?: SettingMachine){
     this.settingsComponent.RemoveDevice(item)

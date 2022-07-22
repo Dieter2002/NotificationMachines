@@ -26,7 +26,8 @@ export class SettingsComponent implements OnInit {
   public showDetailWindow = false
   public showPopUp = false
 
-  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/Settings/"
+  // private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/Settings/"
+  private urlForApi = "https://localhost:13367/api/Settings/"
   // private urlForApi = "https://localhost:13367/api/Settings/"
 
   constructor(private router: Router,

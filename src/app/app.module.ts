@@ -17,7 +17,9 @@ import { ProductionoverviewComponent } from './components/productionoverview/pro
 import { SettingdetailComponent } from './components/settingdetail/settingdetail.component';
 import { TestComponent } from './test/test.component';
 import { PopupwindowComponent } from './components/popupwindow/popupwindow.component';
-import { LoggingService } from './services/LoggingService';
+import { ServiceBundler } from './services/ServiceBundler';
+import { FormsModule } from '@angular/forms';
+import { ProductionoverviewdetailComponent } from './components/productionoverviewdetail/productionoverviewdetail.component';
 
 
 @NgModule({
@@ -33,16 +35,18 @@ import { LoggingService } from './services/LoggingService';
     OverviewComponent,
     ProductionoverviewComponent,
     PopupwindowComponent,
-    TestComponent
+    TestComponent,
+    ProductionoverviewdetailComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [LoggingService],
+  providers: [ServiceBundler],
   bootstrap: [AppComponent],
   exports: [AppRoutingModule]
 })

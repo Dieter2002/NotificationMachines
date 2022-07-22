@@ -8,8 +8,14 @@
 </head>
 <body>
   <app-bar></app-bar>
-  <div class="middle">
+  <div class="middle color-style">
+    <div *ngIf="openDetail">
+      testen
+    </div>
+
+
     <div class="middle-center">
+      <div class="TableData">
       <table class="table-center styled-table">
         <thead>
             <tr>
@@ -19,24 +25,34 @@
             </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of ProductionLines; index as i">
-            <td contenteditable='true'>
-              {{item.typeName}}
+          <tr *ngFor="let item of GetProductionOverview(); index as i"  (click)="OpenDetail(item)">
+            <td contenteditable='true' >
+              {{item.idProd}}
             </td>
-            <!-- <div class="hover-between-cell"></div> -->
             <td>
-              {{item.quantity}}
+              {{item.quantityTrays}}
+            </td>
+            <td>
+              {{setTimeFormat(item.timeStampStart)}} - {{setTimeFormat(item.timeStampStop)}}
             </td>
           </tr>
-            <!-- <tr class="active-row">
-                <td>Melissa</td>
-                <td>5150</td>
-            </tr> -->
-            <!-- and so on... -->
         </tbody>
     </table>
-    </div>
+      </div>
 
+      <div class="SelectionMenu">
+        <select class="MenuWidth" (change)="onChangeSelect($event)" name="productionYears" id="productionYears">
+          <option *ngFor="let item of GetProductionYears()" value={{item}}>{{item}}</option>
+        </select>
+      </div>
+        <div class="RefreshSwitch">
+          <label class="switch" (change)="onChangeSwitch($event)">
+            <input type="checkbox" name="soundCheckBox" [checked]="">
+            <span class="slider round"></span>
+            <span class="labels" data-on="Aan" data-off="Uit"></span>
+          </label>
+        </div>
+    </div>
 
   </div>
 

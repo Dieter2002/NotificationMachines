@@ -1,6 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, Input, OnInit } from '@angular/core';
 import { LoggingService } from 'src/app/services/LoggingService';
+import { ServiceBundler } from 'src/app/services/ServiceBundler';
 import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
@@ -24,7 +25,7 @@ import { SettingsComponent } from '../settings/settings.component';
   ],
   templateUrl: './popupwindow.component.html',
   styleUrls: ['./popupwindow.component.css'],
-  providers: [LoggingService]
+  providers: [ServiceBundler]
 })
 export class PopupwindowComponent implements OnInit {
   @Input() message: string = "";
@@ -32,7 +33,7 @@ export class PopupwindowComponent implements OnInit {
   public isOpen = true;
   private counterOpen = 0;
 
-  constructor(private loggingService: LoggingService,
+  constructor(private loggingService: ServiceBundler,
     private settingsComponent:SettingsComponent) { }
 
   ngOnInit(): void {
@@ -48,6 +49,6 @@ export class PopupwindowComponent implements OnInit {
   }
   ClosePopUp(){
     this.isOpen = false;
-    this.loggingService.logSomeMessage("dshuhdush")
+    console.log(this.loggingService.Aap.been.age);
   }
 }

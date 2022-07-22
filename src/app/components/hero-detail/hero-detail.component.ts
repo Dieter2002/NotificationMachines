@@ -51,14 +51,16 @@ export class HeroDetailComponent implements OnInit {
 
   public notifications!: Array<NotificationMachine>;
 
-  // private urlForApi = "https://localhost:13367/api/MachineItems/"
-  private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/MachineItems/"
+  private urlForApi = "https://localhost:13367/api/MachineNotifications/"
+  //private urlForApi = "https://api.cloudkwekerijbloemendaal.com/api/MachineNotifications/"
   public soundPlaying = false
   private lastTimeCall = 0
 
   constructor(private router: Router,
     private http: HttpClient,
-    private globalSettingsService:GlobalSettingsService) {
+    private globalSettingsService:GlobalSettingsService)
+    {
+
     let no: NotificationMachine = new NotificationMachine("exclamation-triangle", "", "", "", false, "", "",  "critic")
     this.notifications = [(no)]
     no.visible = false
@@ -75,7 +77,7 @@ export class HeroDetailComponent implements OnInit {
       this.globalSettingsService.YourComponentNameLoadedAlready=true;
     }
 
-    this.lastTimeCall = Date.now() / 1000;
+    this.lastTimeCall = Date.now();
     this.DataCall()
   }
 
@@ -97,8 +99,8 @@ export class HeroDetailComponent implements OnInit {
   }
 
   _displayItems(data: [BekidanFillerItem]) {
-    if ((Date.now() / 1000) + 50000 > this.lastTimeCall ){
-      this.lastTimeCall = Date.now() / 1000
+    if ((Date.now()) + 50000 > this.lastTimeCall ){
+      this.lastTimeCall = Date.now()
       console.log(this.lastTimeCall)
     }
     else{
@@ -160,6 +162,8 @@ export class HeroDetailComponent implements OnInit {
   }
 
   async DataCall() {
+    console.log("sw")
+
     await fetch(this.urlForApi)
       .then(response => response.json())
       .then(data => this._displayItems(data))

@@ -1,6 +1,6 @@
 import SampleJson from '../resource/keysobjects.json'
 
-class TransationService{
+export class TranslationService{
   private greeting: string;
 
   constructor(){
